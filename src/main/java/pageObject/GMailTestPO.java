@@ -1,11 +1,11 @@
+package pageObject;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pageObject.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,55 +24,52 @@ public class GMailTestPO {
         driver.manage().window().maximize();
     }
 
-    @Test(description = "GMailTestPO")
+    @Test(description = "loginToAccountTest")
     public void loginToAccountTest() {
-        AccountPage accountPage = new UsernameVerificationPage(driver).googleMailOpen().fillUsername("test.da.10062017").clickNextButton().fillPassword("testtest01").clickNextButton();
-        boolean isAccountIconPresent = new AccountPage(driver).isElementPresent();
+        AccountPage accountPage = new LoginToGMailPage(driver).loginToGMail("test.da.10062017" ,"testtest01");
+        boolean isAccountIconPresent = accountPage.isAccountIconPresent();
         Assert.assertTrue(isAccountIconPresent, "User isn't logged in");
     }
 
-    @Test(description = "SaveToDraftTest", dependsOnMethods = "loginToAccountTest")
+    @Test(description = "SaveToDraftTest")
     public void saveToDraftTest() {
-        WriteMailPage writeMail = new AccountPage(driver).clickWriteMailButton().fillToField("dina_abdykasheva@mail.ru").fillSubjectField("mentoring task").fillBodyField("text").clickCloseButton();
-        DraftsFolderPage draftsFolder = new AccountPage(driver).openDrafts();
-        boolean isDraftMailSaved = new DraftsFolderPage(driver).isDraftMailSaved();
+        DraftsFolderPage writeMail = new AccountPage(driver).clickWriteMailButton().writeMailAndSaveToDraft("dina_abdykasheva@mail.ru", "mentoring task", "body text");
+        boolean isDraftMailSaved = new DraftsFolderPage(driver).isDraftMailDisplayed();
         Assert.assertTrue(isDraftMailSaved, "Mail isn't saved in drafts");
     }
 
-    @Test(description = "VerifySavedDraftTest", dependsOnMethods = "saveToDraftTest")
-    public void verifySavedDraftTest() {
+    /*@Test(description = "VerifySavedDraftTestAndSendEmail")
+    public void verifySavedDraftTestAndSentEmail() {
         WriteMailPage openSavedDraft = new DraftsFolderPage(driver).openDraftMail();
-        String receiver = new WriteMailPage(driver).getReceiver();
+        String receiver = openSavedDraft.getReceiver();
         Assert.assertEquals("dina_abdykasheva@mail.ru", receiver, "Receiver isn't valid");
-        String subject = new WriteMailPage(driver).getSubject();
+        String subject = openSavedDraft.getSubject();
         Assert.assertEquals("mentoring task", subject, "Subject isn't valid");
-        String body = new WriteMailPage(driver).getBody();
+        String body = openSavedDraft.getBody();
         Assert.assertEquals("text", body, "Body isn't valid");
+        openSavedDraft.sendMail();
     }
 
-    @Test(description = "SendMailTest", dependsOnMethods = "verifySavedDraftTest")
-    public void sendMailTest() {
-        AccountPage sendMail = new WriteMailPage(driver).sendMail();
-    }
-
-    @Test(description = "MailIsDeletedFromDraftsTest", dependsOnMethods = "sendMailTest")
+    @Test(description = "MailIsDeletedFromDraftsTest")
     public void mailIsDeletedFromDraftsTest() {
         DraftsFolderPage openDraftFolder = new AccountPage(driver).openDrafts();
-        boolean isMailDeletedFromDrafts = new DraftsFolderPage(driver).isDraftMailDeleted();
-        Assert.assertTrue(isMailDeletedFromDrafts, "Mail isn't deleted from drafts");
+        boolean isMailDeletedFromDrafts = new DraftsFolderPage(driver).isDraftMailDisplayed();
+        Assert.assertFalse(isMailDeletedFromDrafts, "Mail isn't deleted from drafts");
     }
 
-    @Test(description = "VerifySentFolderTest", dependsOnMethods = "sendMailTest")
+    @Test(description = "VerifySentFolderTest")
     public void verifySentFolderTest() {
         SentFolderPage openSentFolder = new AccountPage(driver).openSentMail();
         boolean isMailSent = new SentFolderPage(driver).isMailSent();
         Assert.assertTrue(isMailSent, "Mail isn't sent");
     }
 
-    @Test(description = "ExitGMailTest", dependsOnMethods = "verifySentFolderTest")
+    @Test(description = "ExitGMailTest")
     public void exitGMailTest() {
         AccountPage exitGMail = new AccountPage(driver).exitGMail();
-    }
+        boolean isUserLoggedOff = new LoginToGMailPage(driver).isUserLoggedOff();
+        Assert.assertTrue(isUserLoggedOff, "User wasn't logged off");
+    }*/
 
     @AfterClass(description = "closeDriver")
     public void closeDriver() {

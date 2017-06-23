@@ -16,34 +16,21 @@ public class WriteMailPage extends AbstractPage{
     private static final By BODY_FIELD_LOCATOR = By.xpath(".//div[@role='textbox']");
     private static final By CLOSE_WRITE_MAIL_WINDOW_LOCATOR = By.xpath(".//img[@class='Ha']");
     private static final By SEND_MAIL_BUTTON_LOCATOR = By.xpath(".//div[@class='T-I J-J5-Ji aoO T-I-atl L3']");
+    private static final By DRAFTS_FOLDER_LOCATOR = By.xpath(".//a[contains(text(), 'Черновики')]");
 
     public WriteMailPage(WebDriver driver) {
         super(driver);
     }
 
-    public WriteMailPage fillToField(String to) {
-        WebElement element = driver.findElement(TO_FIELD_LOCATOR);
-        Actions actions = new Actions(driver);
-        actions.moveToElement(element);
-        actions.click();
-        actions.sendKeys(to);
-        actions.build().perform();
-        return this;
-    }
-
-    public WriteMailPage fillSubjectField(String subject) {
-        driver.findElement(SUBJECT_FIELD_LOCATOR).sendKeys(subject);
-        return this;
-    }
-
-    public WriteMailPage fillBodyField(String body) {
+    public DraftsFolderPage writeMailAndSaveToDraft(String to, String subject, String body) {
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(TO_FIELD_LOCATOR)).sendKeys(to);
+        //driver.findElement(TO_FIELD_LOCATOR).sendKeys(to);
+        driver.findElement(BODY_FIELD_LOCATOR).sendKeys(subject);
         driver.findElement(BODY_FIELD_LOCATOR).sendKeys(body);
-        return this;
-    }
-
-    public WriteMailPage clickCloseButton() {
         driver.findElement(CLOSE_WRITE_MAIL_WINDOW_LOCATOR).click();
-        return this;
+        driver.findElement(DRAFTS_FOLDER_LOCATOR).click();
+        return new DraftsFolderPage(driver);
     }
 
     public String getReceiver() {

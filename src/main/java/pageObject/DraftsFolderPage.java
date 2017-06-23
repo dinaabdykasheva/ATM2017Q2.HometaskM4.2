@@ -13,12 +13,8 @@ public class DraftsFolderPage extends AbstractPage {
         super(driver);
     }
 
-    public boolean isDraftMailSaved() {
-        return !driver.findElements(DRAFT_MAIL_LOCATOR).isEmpty();
-    }
-
-    public boolean isDraftMailDeleted() {
-        return driver.findElements(DRAFT_MAIL_LOCATOR).isEmpty();
+    public boolean isDraftMailDisplayed() {
+        return driver.findElement(DRAFT_MAIL_LOCATOR).isDisplayed();
     }
 
     public WriteMailPage openDraftMail() {

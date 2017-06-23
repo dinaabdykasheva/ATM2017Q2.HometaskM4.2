@@ -1,3 +1,5 @@
+package pageFactory;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -23,7 +25,7 @@ public class GMailTestPF {
         driver.manage().window().maximize();
     }
 
-    @Test(description = "GMailTestPO")
+    @Test(description = "pageObject.GMailTestPO")
     public void loginToAccountTest() {
         AccountPagePF accountPage = new UsernameVerificationPagePF(driver).googleMailOpen().fillUsername("test.da.10062017").clickNextButton().fillPassword("testtest01").clickNextButton();
         boolean isAccountIconPresent = new AccountPagePF(driver).isElementPresent();

@@ -26,7 +26,7 @@ public class AccountPage extends AbstractPage {
         return new WriteMailPage(driver);
     }
 
-    public boolean isElementPresent() {
+    public boolean isAccountIconPresent() {
         return !driver.findElements(ACCOUNT_ICON_LOCATOR).isEmpty();
     }
 

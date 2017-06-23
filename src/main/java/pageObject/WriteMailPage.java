@@ -21,8 +21,6 @@ public class WriteMailPage extends AbstractPage{
     private static final By DRAFTS_FOLDER_LOCATOR = By.xpath(".//a[contains(text(), 'Черновики')]");
     private static final By SAVING_LABEL_LOCATOR = By.xpath(".//span[@class = 'oG aOy']");
     private static final By TO_FIELD_IN_DRAFT_LOCATOR = By.xpath(".//span[@class='vN bfK a3q']");
-    private static final By SUBJECT_FIELD_IN_DRAFT_LOCATOR = By.name("subjectbox");
-    private static final By BODY_FIELD_IN_DRAFT_LOCATOR = By.xpath(".//div[@role='textbox']");
 
     public WriteMailPage(WebDriver driver) {
         super(driver);
@@ -50,11 +48,11 @@ public class WriteMailPage extends AbstractPage{
     }
 
     public String getSubject() {
-        return driver.findElement(SUBJECT_FIELD_IN_DRAFT_LOCATOR).getAttribute("value");
+        return driver.findElement(SUBJECT_FIELD_LOCATOR).getAttribute("value");
     }
 
     public String getBody() {
-        return driver.findElement(BODY_FIELD_IN_DRAFT_LOCATOR).getText();
+        return driver.findElement(BODY_FIELD_LOCATOR).getText();
     }
 
     public AccountPage sendMail() {

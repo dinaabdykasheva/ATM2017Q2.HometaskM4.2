@@ -17,10 +17,11 @@ public class WriteMailPage extends AbstractPage{
     private static final By SUBJECT_FIELD_LOCATOR = By.name("subjectbox");
     private static final By BODY_FIELD_LOCATOR = By.xpath(".//div[@role='textbox']");
     private static final By CLOSE_WRITE_MAIL_WINDOW_LOCATOR = By.xpath(".//img[@class='Ha']");
-    private static final By SEND_MAIL_BUTTON_LOCATOR = By.xpath(".//div[@class='T-I J-J5-Ji aoO T-I-atl L3']");
+    private static final By SEND_MAIL_BUTTON_LOCATOR = By.xpath(".//div[contains(text(), 'Отправить')]");
     private static final By DRAFTS_FOLDER_LOCATOR = By.xpath(".//a[contains(text(), 'Р§РµСЂРЅРѕРІРёРєРё')]");
     private static final By SAVING_LABEL_LOCATOR = By.xpath(".//span[@class = 'oG aOy']");
     private static final By TO_FIELD_IN_DRAFT_LOCATOR = By.xpath(".//span[@class='vN bfK a3q']");
+    private static final By MAIL_IS_SENT_LOCATOR = By.xpath(".//div[contains(text(), 'Письмо отправлено')]");
 
     public WriteMailPage(WebDriver driver) {
         super(driver);
@@ -57,6 +58,8 @@ public class WriteMailPage extends AbstractPage{
 
     public AccountPage sendMail() {
         driver.findElement(SEND_MAIL_BUTTON_LOCATOR).click();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(MAIL_IS_SENT_LOCATOR));
         return new AccountPage(driver);
     }
 

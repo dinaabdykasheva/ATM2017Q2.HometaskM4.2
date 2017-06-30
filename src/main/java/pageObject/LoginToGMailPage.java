@@ -28,10 +28,10 @@ public class LoginToGMailPage extends AbstractPage{
         driver.get("https://www.google.com/gmail");
         driver.findElement(USERNAME_INPUT_LOCATOR).sendKeys(username);
         driver.findElement(NEXT_BUTTON_LOCATOR).click();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("profileIdentifier")));
         driver.findElement(PASSWORD_INPUT_LOCATOR).sendKeys(password);
-        WebElement element = driver.findElement(NEXT_BUTTON_LOCATOR1);
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
-        executor.executeScript("arguments[0].click()", element);
+        driver.findElement(NEXT_BUTTON_LOCATOR1).click();
         return new AccountPage(driver);
     }
 

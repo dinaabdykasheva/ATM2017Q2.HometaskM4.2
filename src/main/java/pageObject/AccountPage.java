@@ -13,9 +13,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class AccountPage extends AbstractPage {
     private static final By ACCOUNT_ICON_LOCATOR = By.xpath(".//span [@class='gb_8a gbii']");
     private static final By WRITE_MAIL_BUTTON_LOCATOR = By.xpath(".//div[@class='T-I J-J5-Ji T-I-KE L3']");
-    private static final By DRAFTS_FOLDER_LOCATOR = By.xpath(".//a[contains(text(), 'Р§РµСЂРЅРѕРІРёРєРё')]");
-    private static final By SENT_MAIL_FOLDER_LOCATOR = By.xpath(".//a[contains(text(), 'РћС‚РїСЂР°РІР»РµРЅРЅС‹Рµ')]");
-    private static final By EXIT_BUTTON_LOCATOR = By.xpath(".//a[contains(text(), 'Р’С‹Р№С‚Рё')]");
+    private static final By DRAFTS_FOLDER_LOCATOR = By.xpath(".//a[contains(text(), 'Черновики')]");
+    private static final By SENT_MAIL_FOLDER_LOCATOR = By.xpath(".//a[contains(text(), 'Отправленные')]");
+    private static final By EXIT_BUTTON_LOCATOR = By.xpath(".//a[contains(text(), 'Выход')]");
 
     public AccountPage(WebDriver driver) {
         super(driver);
@@ -23,6 +23,7 @@ public class AccountPage extends AbstractPage {
 
     public WriteMailPage clickWriteMailButton() {
         driver.findElement(WRITE_MAIL_BUTTON_LOCATOR).click();
+        driver.switchTo().activeElement();
         return new WriteMailPage(driver);
     }
 
@@ -31,13 +32,11 @@ public class AccountPage extends AbstractPage {
     }
 
     public DraftsFolderPage openDrafts() {
-        driver.switchTo().defaultContent();
         driver.findElement(DRAFTS_FOLDER_LOCATOR).click();
         return new DraftsFolderPage(driver);
     }
 
     public SentFolderPage openSentMail() {
-        driver.switchTo().defaultContent();
         driver.findElement(SENT_MAIL_FOLDER_LOCATOR).click();
         return new SentFolderPage(driver);
     }

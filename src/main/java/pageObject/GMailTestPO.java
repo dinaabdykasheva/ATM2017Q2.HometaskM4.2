@@ -60,25 +60,18 @@ public class GMailTestPO {
     @Test(description = "isMailSent", dependsOnMethods = {"verifySavedDraftReceiverTest", "verifySavedDraftSubjectTest", "verifySavedDraftBodyTest"})
     public void isMailSent() {
         SentFolderPage sendMail = new WriteMailPage(driver).sendMail().openSentMail();
-        //boolean isMailSent = sendMail.isMailSent();
-        //Assert.assertTrue(isMailSent, "Mail wasn't sent");
+        boolean isMailSent = sendMail.isMailSent();
+        Assert.assertTrue(isMailSent, "Mail wasn't sent");
     }
 
-    /*@Test(description = "MailIsDeletedFromDraftsTest", priority = 3)
+    @Test(description = "MailIsDeletedFromDraftsTest", dependsOnMethods = "isMailSent")
     public void mailIsDeletedFromDraftsTest() {
         DraftsFolderPage openDraftFolder = new AccountPage(driver).openDrafts();
         boolean isMailDeletedFromDrafts = new DraftsFolderPage(driver).isDraftMailDisplayed();
         Assert.assertFalse(isMailDeletedFromDrafts, "Mail isn't deleted from drafts");
     }
 
-    @Test(description = "VerifySentFolderTest", priority = 4)
-    public void verifySentFolderTest() {
-        SentFolderPage openSentFolder = new AccountPage(driver).openSentMail();
-        boolean isMailSent = new SentFolderPage(driver).isMailSent();
-        Assert.assertTrue(isMailSent, "Mail isn't sent");
-    }
-
-    @Test(description = "ExitGMailTest", priority = 5)
+   @Test(description = "ExitGMailTest", dependsOnMethods = "isMailSent")
     public void exitGMailTest() {
         AccountPage exitGMail = new AccountPage(driver).exitGMail();
         boolean isUserLoggedOff = new LoginToGMailPage(driver).isUserLoggedOff();
@@ -88,5 +81,5 @@ public class GMailTestPO {
     @AfterClass(description = "closeDriver")
     public void closeDriver() {
         driver.close();
-    }*/
+    }
 }

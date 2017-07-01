@@ -22,7 +22,8 @@ public class WriteMailPage extends AbstractPage{
     private static final By DRAFTS_FOLDER_LOCATOR = By.xpath(".//div[@class = 'TN GLujEb aHS-bnq']");
     private static final By SAVING_LABEL_LOCATOR = By.xpath(".//span[@class = 'oG aOy']");
     private static final By TO_FIELD_IN_DRAFT_LOCATOR = By.xpath(".//span[@class='vN bfK a3q']");
-    private static final By MAIL_IS_SENT_LOCATOR = By.xpath(".//div[@class='ag a8k']");
+    private static final By MAIL_IS_SENT_LOCATOR = By.xpath(".//div[contains (text(), 'Письмо отправлено')]");
+    private static final By DIALOG_WINDOW_LOCATOR = By.xpath(".//div[@role = 'dialog']");
 
     public WriteMailPage(WebDriver driver) {
         super(driver);
@@ -30,7 +31,7 @@ public class WriteMailPage extends AbstractPage{
 
     public DraftsFolderPage writeMailAndSaveToDraft(String to, String subject, String body) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@role = 'dialog']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(DIALOG_WINDOW_LOCATOR));
         wait.until(ExpectedConditions.visibilityOfElementLocated(TO_FIELD_LOCATOR)).sendKeys(to);
         driver.findElement(SUBJECT_FIELD_LOCATOR).sendKeys(subject);
         driver.findElement(BODY_FIELD_LOCATOR).sendKeys(body);

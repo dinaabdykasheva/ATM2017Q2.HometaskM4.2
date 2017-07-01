@@ -19,6 +19,7 @@ public class LoginToGMailPage extends AbstractPage{
     private static final By PASSWORD_INPUT_LOCATOR = By.name("password");
     private static final By NEXT_BUTTON_LOCATOR1 = By.id("passwordNext");
     private static final By LOGIN_PAGE_LOCATOR = By.xpath(".//*[@class= 'sfYUmb']");
+    private static final By PROFILE_IDENTIFIER_LOCATOR = By.id("profileIdentifier");
 
     public LoginToGMailPage(WebDriver driver) {
         super(driver);
@@ -29,7 +30,7 @@ public class LoginToGMailPage extends AbstractPage{
         driver.findElement(USERNAME_INPUT_LOCATOR).sendKeys(username);
         driver.findElement(NEXT_BUTTON_LOCATOR).click();
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("profileIdentifier")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(PROFILE_IDENTIFIER_LOCATOR));
         driver.findElement(PASSWORD_INPUT_LOCATOR).sendKeys(password);
         driver.findElement(NEXT_BUTTON_LOCATOR1).click();
         return new AccountPage(driver);
@@ -37,9 +38,5 @@ public class LoginToGMailPage extends AbstractPage{
 
     public boolean isUserLoggedOff() {
         return driver.findElement(LOGIN_PAGE_LOCATOR).isDisplayed();
-    }
-
-    protected void waitForElementEnabled(By locator) {
-        new WebDriverWait(driver, WAIT_FOR_ELEMENT_TIMEOUT_SECONDS).until(ExpectedConditions.elementToBeClickable(NEXT_BUTTON_LOCATOR));
     }
 }

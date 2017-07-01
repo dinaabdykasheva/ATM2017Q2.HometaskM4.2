@@ -2,6 +2,8 @@ package pageObject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Created by Dina_Abdykasheva on 6/16/2017.
@@ -14,7 +16,7 @@ public class DraftsFolderPage extends AbstractPage {
     }
 
     public boolean isDraftMailDisplayed() {
-        return driver.findElement(DRAFT_MAIL_LOCATOR).isDisplayed();
+        return !driver.findElements(DRAFT_MAIL_LOCATOR).isEmpty();
     }
 
     public WriteMailPage openDraftMail() {

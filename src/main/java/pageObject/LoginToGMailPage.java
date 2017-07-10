@@ -1,9 +1,7 @@
 package pageObject;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -18,7 +16,7 @@ public class LoginToGMailPage extends AbstractPage{
     private static final By NEXT_BUTTON_LOCATOR = By.id("identifierNext");
     private static final By PASSWORD_INPUT_LOCATOR = By.name("password");
     private static final By NEXT_BUTTON_LOCATOR1 = By.id("passwordNext");
-    private static final By LOGIN_PAGE_LOCATOR = By.xpath(".//*[@class= 'sfYUmb']");
+    private static final By LOGIN_PAGE_LOCATOR = By.xpath(".//div[contains(text(), 'test.da.10062017@gmail.com')]");
     private static final By PROFILE_IDENTIFIER_LOCATOR = By.id("profileIdentifier");
 
     public LoginToGMailPage(WebDriver driver) {

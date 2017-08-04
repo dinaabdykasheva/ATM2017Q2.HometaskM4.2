@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
  * Created by Dina_Abdykasheva on 6/15/2017.
  */
 public class LoginToGMailPage extends AbstractPage{
-    private static final int WAIT_FOR_ELEMENT_TIMEOUT_SECONDS = 10;
     private static final By USERNAME_INPUT_LOCATOR = By.name("identifier");
     private static final By NEXT_BUTTON_LOCATOR = By.id("identifierNext");
     private static final By PASSWORD_INPUT_LOCATOR = By.name("password");
@@ -27,8 +26,9 @@ public class LoginToGMailPage extends AbstractPage{
         driver.get("https://www.google.com/gmail");
         driver.findElement(USERNAME_INPUT_LOCATOR).sendKeys(username);
         driver.findElement(NEXT_BUTTON_LOCATOR).click();
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(PROFILE_IDENTIFIER_LOCATOR));
+        waitForElementPresent(driver, 10, ExpectedConditions.visibilityOfElementLocated(PROFILE_IDENTIFIER_LOCATOR));
+        /*WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(PROFILE_IDENTIFIER_LOCATOR));*/
         driver.findElement(PASSWORD_INPUT_LOCATOR).sendKeys(password);
         driver.findElement(NEXT_BUTTON_LOCATOR1).click();
         return new AccountPage(driver);

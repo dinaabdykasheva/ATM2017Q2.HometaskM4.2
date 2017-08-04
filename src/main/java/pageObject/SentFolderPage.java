@@ -14,6 +14,6 @@ public class SentFolderPage extends AbstractPage{
     }
 
     public boolean isMailSent() {
-        return !driver.findElements(SENT_MAIL_LOCATOR).isEmpty();
+        return isElementPresent(SENT_MAIL_LOCATOR);
     }
 }

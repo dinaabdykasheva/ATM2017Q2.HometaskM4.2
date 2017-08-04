@@ -10,19 +10,18 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Dina_Abdykasheva on 6/15/2017.
  */
-public class GMailTestPO {
-    private WebDriver driver;
+public class GMailTestPO extends AbstractPage{
 
-    @BeforeClass(description = "StartBrowser")
-    private void startBrowser() {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
+    public DraftsFolderPage writeMail, openDraftFolder;
+    public WriteMailPage openSavedDraft;
+    public SentFolderPage sendMail;
+    public LoginToGMailPage exitGMail;
+
+    public GMailTestPO(WebDriver driver) {
+        super(driver);
     }
 
-    @Test(description = "loginToAccountTest", priority = 0, dataProvider = "LoginToAccountDataProvider")
+    @Test(description = "loginToAccountTest", priority = 0)
     @Parameters({"username", "password"})
     public void loginToAccountTest(String username, String password) {
         AccountPage accountPage = new LoginToGMailPage(driver).loginToGMail(username, password);
@@ -37,10 +36,10 @@ public class GMailTestPO {
         };
     }
 
-    @Test(description = "SaveToDraftTest", dependsOnMethods = "loginToAccountTest", dataProvider = "SaveToDraftDataProvider")
+    /*@Test(description = "SaveToDraftTest", dependsOnMethods = "loginToAccountTest", dataProvider = "SaveToDraftDataProvider")
     @Parameters({"recipient", "subject", "body"})
     public void saveToDraftTest(String recipient, String subject, String body) {
-        DraftsFolderPage writeMail = new AccountPage(driver).clickWriteMailButton().writeMailAndSaveToDraft(recipient, subject, body);
+        writeMail = new AccountPage(driver).clickWriteMailButton().writeMailAndSaveToDraft(recipient, subject, body);
         boolean isDraftMailSaved = writeMail.isDraftMailDisplayed();
         Assert.assertTrue(isDraftMailSaved, "Mail isn't saved in drafts");
     }
@@ -55,7 +54,7 @@ public class GMailTestPO {
     @Test(description = "VerifySavedDraftReceiverTest", dependsOnMethods = "saveToDraftTest", dataProvider = "VerifySavedDraftReceiverDataProvider")
     @Parameters({"recipient"})
     public void verifySavedDraftReceiverTest(String recipient) {
-        WriteMailPage openSavedDraft = new DraftsFolderPage(driver).openDraftMail();
+        openSavedDraft = new DraftsFolderPage(driver).openDraftMail();
         String receiver = openSavedDraft.getReceiver();
         Assert.assertEquals(recipient, receiver, "Receiver isn't valid");
     }
@@ -97,28 +96,23 @@ public class GMailTestPO {
 
     @Test(description = "isMailSent", dependsOnMethods = {"verifySavedDraftReceiverTest", "verifySavedDraftSubjectTest", "verifySavedDraftBodyTest"})
     public void isMailSent() {
-        SentFolderPage sendMail = new WriteMailPage(driver).sendMail().openSentMail();
+        sendMail = new WriteMailPage(driver).sendMail().openSentMail();
         boolean isMailSent = sendMail.isMailSent();
         Assert.assertTrue(isMailSent, "Mail wasn't sent");
     }
 
     @Test(description = "MailIsDeletedFromDraftsTest", dependsOnMethods = "isMailSent")
     public void mailIsDeletedFromDraftsTest() {
-        DraftsFolderPage openDraftFolder = new AccountPage(driver).openDrafts();
+        openDraftFolder = new AccountPage(driver).openDrafts();
         boolean isMailDeletedFromDrafts = openDraftFolder.isDraftMailDisplayed();
         Assert.assertFalse(isMailDeletedFromDrafts, "Mail isn't deleted from drafts");
     }
 
    @Test(description = "ExitGMailTest", dependsOnMethods = "isMailSent")
     public void exitGMailTest() {
-        LoginToGMailPage exitGMail = new AccountPage(driver).exitGMail();
-        boolean isUserLoggedOff = new LoginToGMailPage(driver).isUserLoggedOff();
+        exitGMail = new AccountPage(driver).exitGMail();
+        boolean isUserLoggedOff = exitGMail.isUserLoggedOff();
         Assert.assertTrue(isUserLoggedOff, "User wasn't logged off");
-    }
-
-    @AfterClass(description = "closeDriver")
-    public void closeDriver() {
-        driver.close();
-    }
+    }*/
 
 }

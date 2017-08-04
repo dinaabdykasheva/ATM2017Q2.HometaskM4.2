@@ -14,7 +14,7 @@ public class DraftsFolderPage extends AbstractPage {
     }
 
     public boolean isDraftMailDisplayed() {
-        return !driver.findElements(DRAFT_MAIL_LOCATOR).isEmpty();
+        return isElementPresent(DRAFT_MAIL_LOCATOR);
     }
 
     public WriteMailPage openDraftMail() {

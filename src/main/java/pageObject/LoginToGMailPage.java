@@ -23,13 +23,13 @@ public class LoginToGMailPage extends AbstractPage{
         driver.get("https://www.google.com/gmail");
         driver.findElement(USERNAME_INPUT_LOCATOR).sendKeys(username);
         driver.findElement(NEXT_BUTTON_LOCATOR).click();
-        waitForElementPresent(driver, 10, ExpectedConditions.visibilityOfElementLocated(PROFILE_IDENTIFIER_LOCATOR));
+        waitForElementPresent(ExpectedConditions.visibilityOfElementLocated(PROFILE_IDENTIFIER_LOCATOR));
         driver.findElement(PASSWORD_INPUT_LOCATOR).sendKeys(password);
         driver.findElement(NEXT_BUTTON_LOCATOR1).click();
         return new AccountPage(driver);
     }
 
     public boolean isUserLoggedOff() {
-        return driver.findElement(LOGIN_PAGE_LOCATOR).isDisplayed();
+        return isElementPresent(LOGIN_PAGE_LOCATOR);
     }
 }

@@ -34,7 +34,7 @@ public class SetLabelToMailTest extends AbstractPage{
         Assert.assertTrue(isMailSent, "Mail wasn't sent");
     }
 
-    @Test(description = "setLabeltoMail", dependsOnMethods = "verifySentMail")
+    @Test(description = "setLabelToMail", dependsOnMethods = "verifySentMail")
     public void setLabelToMailTest(){
         sentMailPage = new SentFolderPage(driver).openSentMail().setLabel();
         boolean isLabelSet = sentMailPage.isLabelSet();

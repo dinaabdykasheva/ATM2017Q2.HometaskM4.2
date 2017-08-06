@@ -1,11 +1,8 @@
 package pageObject;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Dina_Abdykasheva on 6/15/2017.
@@ -16,27 +13,23 @@ public class GMailTestPO extends AbstractPage{
     public WriteMailPage openSavedDraft;
     public SentFolderPage sendMail;
     public LoginToGMailPage exitGMail;
+    public AccountPage accountPage;
 
     public GMailTestPO(WebDriver driver) {
         super(driver);
     }
 
+    public GMailTestPO() {}
+
     @Test(description = "loginToAccountTest", priority = 0)
     @Parameters({"username", "password"})
     public void loginToAccountTest(String username, String password) {
-        AccountPage accountPage = new LoginToGMailPage(driver).loginToGMail(username, password);
+        accountPage = new LoginToGMailPage(driver).loginToGMail(username, password);
         boolean isAccountIconPresent = accountPage.isAccountIconPresent();
         Assert.assertTrue(isAccountIconPresent, "User isn't logged in");
     }
 
-    @DataProvider(name = "LoginToAccountDataProvider")
-    public Object[][] loginToAccountDataProvider() {
-        return new Object[][] {
-                {"test.da.10062017", "testtest01"}
-        };
-    }
-
-    /*@Test(description = "SaveToDraftTest", dependsOnMethods = "loginToAccountTest", dataProvider = "SaveToDraftDataProvider")
+    @Test(description = "SaveToDraftTest", dependsOnMethods = "loginToAccountTest")
     @Parameters({"recipient", "subject", "body"})
     public void saveToDraftTest(String recipient, String subject, String body) {
         writeMail = new AccountPage(driver).clickWriteMailButton().writeMailAndSaveToDraft(recipient, subject, body);
@@ -44,14 +37,7 @@ public class GMailTestPO extends AbstractPage{
         Assert.assertTrue(isDraftMailSaved, "Mail isn't saved in drafts");
     }
 
-    @DataProvider(name = "SaveToDraftDataProvider")
-    public Object[][] saveToDraftDataProvider() {
-        return new Object[][] {
-                {"dina_abdykasheva@mail.ru", "mentoring task", "body text"}
-        };
-    }
-
-    @Test(description = "VerifySavedDraftReceiverTest", dependsOnMethods = "saveToDraftTest", dataProvider = "VerifySavedDraftReceiverDataProvider")
+    @Test(description = "VerifySavedDraftReceiverTest", dependsOnMethods = "saveToDraftTest")
     @Parameters({"recipient"})
     public void verifySavedDraftReceiverTest(String recipient) {
         openSavedDraft = new DraftsFolderPage(driver).openDraftMail();
@@ -59,39 +45,18 @@ public class GMailTestPO extends AbstractPage{
         Assert.assertEquals(recipient, receiver, "Receiver isn't valid");
     }
 
-    @DataProvider(name = "VerifySavedDraftReceiverDataProvider")
-    public Object[][] verifySavedDraftReceiverDataProvider() {
-        return new Object[][] {
-                {"dina_abdykasheva@mail.ru"}
-        };
-    }
-
-    @Test(description = "VerifySavedDraftSubjectTest", dependsOnMethods = "verifySavedDraftReceiverTest", dataProvider = "VerifySavedDraftSubjectDataProvider")
+    @Test(description = "VerifySavedDraftSubjectTest", dependsOnMethods = "verifySavedDraftReceiverTest")
     @Parameters({"subject"})
     public void verifySavedDraftSubjectTest(String subject) {
         String mailSubject = new WriteMailPage(driver).getSubject();
         Assert.assertEquals(subject, mailSubject, "Subject isn't valid");
     }
 
-    @DataProvider(name = "VerifySavedDraftSubjectDataProvider")
-    public Object[][] verifySavedDraftSubjectReceiverDataProvider() {
-        return new Object[][] {
-                {"mentoring task"}
-        };
-    }
-
-    @Test(description = "VerifySavedDraftBodyTest", dependsOnMethods = "verifySavedDraftSubjectTest", dataProvider = "VerifySavedDraftBodyDataProvider")
+    @Test(description = "VerifySavedDraftBodyTest", dependsOnMethods = "verifySavedDraftSubjectTest")
     @Parameters({"body"})
     public void verifySavedDraftBodyTest(String body) {
         String mailBody = new WriteMailPage(driver).getBody();
         Assert.assertEquals(body, mailBody, "Body isn't valid");
-    }
-
-    @DataProvider(name = "VerifySavedDraftBodyDataProvider")
-    public Object[][] verifySavedDraftBodyDataProvider() {
-        return new Object[][] {
-                {"body text"}
-        };
     }
 
     @Test(description = "isMailSent", dependsOnMethods = {"verifySavedDraftReceiverTest", "verifySavedDraftSubjectTest", "verifySavedDraftBodyTest"})
@@ -113,6 +78,6 @@ public class GMailTestPO extends AbstractPage{
         exitGMail = new AccountPage(driver).exitGMail();
         boolean isUserLoggedOff = exitGMail.isUserLoggedOff();
         Assert.assertTrue(isUserLoggedOff, "User wasn't logged off");
-    }*/
+    }
 
 }

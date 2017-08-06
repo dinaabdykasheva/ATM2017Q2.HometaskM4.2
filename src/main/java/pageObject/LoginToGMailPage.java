@@ -3,9 +3,6 @@ package pageObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Dina_Abdykasheva on 6/15/2017.
@@ -27,8 +24,6 @@ public class LoginToGMailPage extends AbstractPage{
         driver.findElement(USERNAME_INPUT_LOCATOR).sendKeys(username);
         driver.findElement(NEXT_BUTTON_LOCATOR).click();
         waitForElementPresent(driver, 10, ExpectedConditions.visibilityOfElementLocated(PROFILE_IDENTIFIER_LOCATOR));
-        /*WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(PROFILE_IDENTIFIER_LOCATOR));*/
         driver.findElement(PASSWORD_INPUT_LOCATOR).sendKeys(password);
         driver.findElement(NEXT_BUTTON_LOCATOR1).click();
         return new AccountPage(driver);

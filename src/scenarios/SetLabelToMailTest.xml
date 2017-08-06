@@ -1,10 +1,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="TestNg" verbose="1" parallel="false">
-    <test name="CalculatorTest">
+    <test name="SetLabelToMailTest">
         <parameter name="username" value="test.da.10062017"/>
-        <parameter name="password" value="testtest"/>
+        <parameter name="password" value="testtest01"/>
         <classes>
-            <class name="pageObject.GMailTestPO"/>
+            <class name="pageObject.SetLabelToMailTest"/>
         </classes>
     </test>
 </suite>

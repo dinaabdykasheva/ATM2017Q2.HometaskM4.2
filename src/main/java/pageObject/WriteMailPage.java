@@ -3,7 +3,6 @@ package pageObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Created by Dina_Abdykasheva on 6/15/2017.
@@ -25,12 +24,12 @@ public class WriteMailPage extends AbstractPage{
     }
 
     public DraftsFolderPage writeMailAndSaveToDraft(String to, String subject, String body) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(DIALOG_WINDOW_LOCATOR));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(TO_FIELD_LOCATOR)).sendKeys(to);
+        waitForElementPresent(driver, 10, ExpectedConditions.visibilityOfElementLocated(DIALOG_WINDOW_LOCATOR));
+        waitForElementPresent(driver, 10, ExpectedConditions.visibilityOfElementLocated(TO_FIELD_LOCATOR));
+        driver.findElement(TO_FIELD_LOCATOR).sendKeys(to);
         driver.findElement(SUBJECT_FIELD_LOCATOR).sendKeys(subject);
         driver.findElement(BODY_FIELD_LOCATOR).sendKeys(body);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(SAVING_LABEL_LOCATOR));
+        waitForElementPresent(driver, 10, ExpectedConditions.visibilityOfElementLocated(SAVING_LABEL_LOCATOR));
         driver.findElement(CLOSE_WRITE_MAIL_WINDOW_LOCATOR).click();
         driver.findElement(DRAFTS_FOLDER_LOCATOR).click();
         return new DraftsFolderPage(driver);
@@ -50,8 +49,7 @@ public class WriteMailPage extends AbstractPage{
 
     public AccountPage sendMail() {
         driver.findElement(SEND_MAIL_BUTTON_LOCATOR).click();
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(MAIL_IS_SENT_LOCATOR));
+        waitForElementPresent(driver, 10, ExpectedConditions.visibilityOfElementLocated(MAIL_IS_SENT_LOCATOR));
         return new AccountPage(driver);
     }
 
